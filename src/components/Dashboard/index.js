@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function Dashboard() {
+
     return (
         <>
             <div className="h-screen overflow-hidden bg-gray-100 flex flex-col">

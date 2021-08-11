@@ -15,6 +15,9 @@ import Header from './components/Layout/Header'
 
 import UserState from './context/UserState'
 
+import PrivateRoute from './components/PrivateRoute'
+import Facturacion from './components/Dashboard/Facturacion';
+import AuthRoute from './components/AuthRoute';
 
 function App() {
   return (
@@ -26,9 +29,15 @@ function App() {
           <Header />
 
           <Switch>
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
+            {/* RUTAS PRIVADAS */}
+            <PrivateRoute exact path="/dashboard/facturacion" component={Facturacion} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />          
+
+            {/* RUTAS DE AUTENTICACIÓN */}
+            <AuthRoute exact path="/login" component={Login} />
+            <AuthRoute exact path="/register" component={Register} />
+
+            {/* RUTAS PÚBLICAS */}
             <Route path="/" component={Home} />
           </Switch>
         </Router>

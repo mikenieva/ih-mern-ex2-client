@@ -1,6 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import UserContext from './../../context/UserContext'
 
-export default function Login() {
+export default function Login(props) {
+
+    const userCtx = useContext(UserContext)
+
+    const { 
+        loginUser,
+        authStatus,
+        verifyingToken
+    } = userCtx
+
+    const [data, setData] = useState({
+        email: "",
+        password: ""
+    })
+
+
+    useEffect(() => {
+        verifyingToken()
+
+        if(authStatus){
+            props.history.push("/dashboard")
+        }
+
+    }, [authStatus])
+
+    if(authStatus) return null   
+
+
+    const handleChange = (event) => {
+
+        setData({
+            ...data,
+            [event.target.name]: event.target.value
+        })
+
+    }
+
+    const sendData = (event) => {
+        
+        event.preventDefault()
+        console.log(data)
+        loginUser(data)
+
+    }
+
+
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -11,16 +57,23 @@ export default function Login() {
                             Iniciar sesión
                         </h2>
                     </div>
-                    <form className="mt-8 space-y-6" action="#" method="POST">
+                    <form className="mt-8 space-y-6" onSubmit={(e) => { sendData(e) }}>
                         <input type="hidden" name="remember" value="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div>
                                 <label for="email-address" className="sr-only">Tu correo</label>
-                                <input id="email-address" name="email" type="email" autocomplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Tu correo" />
+                                <input 
+                                id="email-address" 
+                                onChange={(e) => { handleChange(e) }}
+                                name="email" type="email" autocomplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Tu correo" />
                             </div>
                             <div>
                                 <label for="password" className="sr-only">Password</label>
-                                <input id="password" name="password" type="password" autocomplete="current-password" 
+                                
+                                <input id="password" 
+                                name="password" 
+                                onChange={(e) => { handleChange(e) }}
+                                type="password" autocomplete="current-password" 
                                 required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
                                 placeholder="Password" />
                             </div>
