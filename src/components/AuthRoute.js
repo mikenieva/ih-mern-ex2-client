@@ -2,8 +2,6 @@ import React, {useContext, useEffect, useState} from 'react'
 
 import { Route, Redirect } from 'react-router-dom'
 
-import Loader from "react-loader-spinner";
-
 import UserContext from './../context/UserContext'
 
 
@@ -27,7 +25,7 @@ export default function AuthRoute({ component: Component, ...props }) {
             if(loading) return null
 
             return authStatus ? 
-                (<Redirect to="/" />)
+                (<Redirect to="/dashboard" />)
                 :
                 (<Component {...props} />)
             }
