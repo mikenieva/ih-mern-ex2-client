@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 
 import {
@@ -14,22 +13,26 @@ import Home from './components/Home'
 
 import Header from './components/Layout/Header'
 
+import UserState from './context/UserState'
+
+
 function App() {
   return (
     <>
 
-      <Router>
+      <UserState>
+        <Router>
 
-        <Header />
+          <Header />
 
-        <Switch>
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route path="/" component={Home}/>
-        </Switch>
-      </Router>
-
+          <Switch>
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route path="/" component={Home} />
+          </Switch>
+        </Router>
+      </UserState>
 
     </>
   );
