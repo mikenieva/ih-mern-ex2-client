@@ -8,7 +8,11 @@ export default function Register() {
 
     const userCtx = useContext(UserContext)
 
-    const { registerUser } = userCtx
+    const { 
+        user,
+        registerUser, 
+        verifyingToken
+    } = userCtx
 
     const [data, setData] = useState({
         username: "",

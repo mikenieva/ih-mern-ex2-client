@@ -1,6 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import sanityClient from './../../sanityClient'
 
 export default function Dashboard() {
+
+    
+    const [ names, setNames ] = useState({
+        sanityResponse: []
+    })
+
+    useEffect(() => {
+        const query = '*[_type == "person"] {name, "cover": cover.asset->url} '
+
+        const getNames = async () => {
+
+            const res = await sanityClient.fetch(query)
+            
+            setNames({
+                sanityResponse: res
+            })
+        }
+
+        getNames()
+
+    }, [])
+
+
+
     return (
         <>
             <div className="h-screen overflow-hidden bg-gray-100 flex flex-col">
@@ -234,7 +259,22 @@ export default function Dashboard() {
 
                         <aside className="hidden lg:block lg:flex-shrink-0 lg:order-first">
                             <div className="h-full relative flex flex-col w-96 border-r border-gray-200 bg-gray-100">
-                                Aquí va el contenido
+                                {
+                                    names.sanityResponse.map(e => {
+                                        return(
+                                            <>
+                                            <p>{e.name}</p>
+                                            
+                                            {
+                                                e.cover ? <img src={e.cover} /> : null
+                                            }
+
+
+                                            </>
+
+                                        )
+                                    })
+                                }
                             </div>
                         </aside>
                     </main>

@@ -15,6 +15,13 @@ import Header from './components/Layout/Header'
 
 import UserState from './context/UserState'
 
+import PrivateRoute from './components/PrivateRoute';
+import AuthRoute from './components/AuthRoute';
+
+import Billing from './components/Dashboard/Billing';
+
+
+
 
 function App() {
   return (
@@ -26,11 +33,19 @@ function App() {
           <Header />
 
           <Switch>
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
+
+            {/* RUTAS PRIVADAS */}
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/dashboard/billing" component={Billing} />
+
+            {/* RUTAS DE AUTENTICACIÓN */}
+            <AuthRoute exact path="/login" component={Login} />
+            <AuthRoute exact path="/register" component={Register} />
+
+            {/* RUTAS PÚBLICAS */}
             <Route path="/" component={Home} />
           </Switch>
+
         </Router>
       </UserState>
 
