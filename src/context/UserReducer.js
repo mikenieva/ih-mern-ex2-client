@@ -13,6 +13,22 @@ const reducers = (globalState, action) => {
             }
 
 
+
+
+        case "REALIZAR_REDIRECCION":
+
+            return {
+                ...globalState,
+                redirect_url: action.payload
+            }
+
+
+        case "BORRAR_REDIRECCION":
+            return {
+                ...globalState,
+                redirect_url: ""
+            }
+
         case "LOGOUT_USER":
 
          localStorage.removeItem("token")   

@@ -12,7 +12,8 @@ const UserState = (props) => {
             email: ""
         },
         authStatus: null,
-        token: null
+        token: null,
+        redirect_url: ""
     }
 
     const [ globalState, dispatch ] = useReducer(UserReducer, initialState)
@@ -37,6 +38,9 @@ const UserState = (props) => {
         }
         
     }
+
+
+    
 
     const verifyingToken = async () => {
 
@@ -101,16 +105,46 @@ const UserState = (props) => {
     }
 
 
+    const generateCheckout = async (dataForm) => {
+
+        try {
+            const res = await axiosClient.post('/api/sessions/create-checkout-session', dataForm)
+
+            
+            dispatch({
+                type: "REALIZAR_REDIRECCION",
+                payload: res.data.redirect_url
+            })
+        
+
+        } catch(e) {
+
+        }
+
+
+    }
+
+
+    const deleteRedirect = async() => {
+
+        dispatch({
+            type: "BORRAR_REDIRECCION"
+        })
+
+    }
 
     return (
         <UserContext.Provider value={{
             user: globalState.user,
             authStatus: globalState.authStatus,
             token: globalState.token,
+            redirect_url: globalState.redirect_url,
             registerUser,
             verifyingToken,
             loginUser,
-            logOut
+            logOut,
+            generateCheckout,
+            deleteRedirect
         }}>
 
             {props.children}
